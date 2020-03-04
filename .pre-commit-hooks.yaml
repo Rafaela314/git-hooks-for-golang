@@ -1,0 +1,42 @@
+# ==============================================================================
+# 1. go-imports
+#   * File-based
+#   * Executes if any .go files modified
+# ==============================================================================
+-   id: go-imports
+    name: 'go-imports'
+    entry: run-go-imports.sh
+    files: '\.go$'
+    language: 'script'
+    description: "Run 'goimports -l -d [$ARGS] $FILE' for each staged .go file"
+    pass_filenames: true
+
+# ==============================================================================
+# 2. go-vet
+#   * File-based
+#   * Executes if any .go files modified
+# NOTES:
+#   `go vet` appears to work on single files when given them as args.
+# ==============================================================================
+-   id: go-vet
+    name: 'go-vet'
+    entry: run-go-vet.sh
+    files: '\.go$'
+    language: 'script'
+    description: "Run 'go vet [$ARGS] $FILE' for each staged .go file"
+    pass_filenames: true
+
+# ==============================================================================
+# 3. golangci-lint
+#   * File-based
+#   * Executes if any .go files modified
+# NOTES:
+#   `golangci-lint` appears to work on single files when given them as args.
+# ==============================================================================
+-   id: golangci-lint
+    name: 'run-golangci-lint'
+    entry: golangci-lint.sh
+    files: '\.go$'
+    language: 'script'
+    description: "Run 'golangci-lint run [$ARGS] $FILE' for each staged .go file"
+    pass_filenames: true
