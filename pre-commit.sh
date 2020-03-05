@@ -24,36 +24,40 @@ if [[ ! -x "$GOIMPORTS" ]]; then
   exit 1
 fi
 
-PASS=true
+echo "============== Running [go imports, go vet, golangci-lint] on staged files  ===============\n\n"
+PASS=0
 
 for FILE in $STAGED_GO_FILES
 do
-  # Run goimports on the staged file
+ 
+ # Run goimports on the staged file
   $GOIMPORTS -w $FILE
-
-  # Run golangci-lint on the staged file and check the exit status
-  #$GOLANGCI_LINT "-set_exit_status" $FILE
-  golangci-lint run $FILE
+  
+   # Run golangci-lint on the staged file and check the exit status
+ 
+  ERRS=$(golangci-lint run $FILE)
 
   if [[ $? == 1 ]]; then
-    printf "\t\033[31mgolint $FILE\033[0m \033[0;30m\033[41mFAILURE!\033[0m\n"
-    PASS=false
+    printf "\t\033[31mgolangci-lint $FILE\033[0m \033[0;30m\033[41mFAILURE!\033[0m\n"
+    echo "${ERRS}"
+    PASS=1
   else
-    printf "\t\033[32mgolint $FILE\033[0m \033[0;30m\033[42mpass\033[0m\n"
+    printf "\t\033[32mgolangci-lint $FILE\033[0m \033[0;30m\033[42mVERIFIED\033[0m\n"
   fi
 
   # Run govet on the staged file and check the exit status
-  #It finds possible bugs and suspicious constructs
-  go vet $FILE
+  #It finds possible bugs and suspicious constructs  
+
+go vet $FILE
   if [[ $? != 0 ]]; then
     printf "\t\033[31mgo vet $FILE\033[0m \033[0;30m\033[41mFAILURE!\033[0m\n"
-    PASS=false
+    PASS=1
   else
-    printf "\t\033[32mgo vet $FILE\033[0m \033[0;30m\033[42mpass\033[0m\n"
+    printf "\t\033[32mgo vet $FILE\033[0m \033[0;30m\033[42mVERIFIED\033[0m\n"
   fi
 done
 
-if ! $PASS; then
+if [ "$PASS" -ne 0 ]; then
   printf "\033[0;30m\033[41mCOMMIT FAILED\033[0m\n"
   exit 1
 else
