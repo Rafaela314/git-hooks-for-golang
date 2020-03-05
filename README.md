@@ -53,6 +53,10 @@ The only actions required are: copy and paste those scripts into the .git/hooks 
 
 chmod x + hook_name
 ```
+### In case you need to skip a pre-commit hook
+```
+git commit --no-verify
+```
 ## Some data sources:
 - https://www.atlassian.com/git/tutorials/git-hooks
 - https://githooks.com/
