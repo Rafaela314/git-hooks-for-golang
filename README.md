@@ -57,6 +57,9 @@ chmod x + hook_name
 ```
 git commit --no-verify
 ```
+
+## Journal
+To complete the task, I first had to familiarize myself at a minimum level with shell script then a had to figure out a way to better organize and implement the hooks. Tried to organize the scripts in a pre-commit.d folder but soon realized It would not be very easy for the teamto use It because of repetitive tasks to actvate each one of scripts. I then tried to install all at once using a pre-commit-hooks.yalm. That could work and It may be a possibility in the future, if added in the .git ignore. For now, I decided to put the pre-commit hooks all togheter, since there are not that much, and activate all at once with a single chmod +x [script name] command. 
 ## Some data sources:
 - https://www.atlassian.com/git/tutorials/git-hooks
 - https://githooks.com/
