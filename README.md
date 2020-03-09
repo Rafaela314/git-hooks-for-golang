@@ -1,5 +1,5 @@
 # Git Hooks
-[TOC]
+
 
 ## Introduction
 
@@ -21,13 +21,13 @@ While server side can be managed in a centrilized way by using the remote repo, 
 
 ![](https://i.imgur.com/8gPFLc5.png)
 
-### Proposed Hooks to be developed
+### Suggested interesting Hooks to help developers team
 
 1. Pre commit hooks:
 
 - process: allow only staged files to be commited
 - check: Run lint
-- check: Run tests
+- check: Run imports
 - check: Run Vet(examines Go source code and reports suspicious constructs, such as Printf calls whose arguments do not align with the format string)
 
 2. Prepare commit message hook
@@ -37,9 +37,9 @@ While server side can be managed in a centrilized way by using the remote repo, 
 3. Post-commit hooks:
 - commit notification
 
-
-4. Post checkout hooks:
-- process: Indicate if the branch is up to date with remote and, if not, call git pull origin dev to update the dev branch everytime there is a git checkout directed to that specific branch
+4. Pre push:
+- check: go tests
+- check: general lint
 
 ### How to use It
 
@@ -57,9 +57,11 @@ chmod x + hook_name
 ```
 git commit --no-verify
 ```
+If you want to totally remove It, just erase It from .git/hooks folder
 
 ## Journal
-To complete the task, I first had to familiarize myself at a minimum level with shell script then a had to figure out a way to better organize and implement the hooks. Tried to organize the scripts in a pre-commit.d folder but soon realized It would not be very easy for the teamto use It because of repetitive tasks to actvate each one of scripts. I then tried to install all at once using a pre-commit-hooks.yalm. That could work and It may be a possibility in the future, if added in the .git ignore. For now, I decided to put the pre-commit hooks all togheter, since there are not that much, and activate all at once with a single chmod +x [script name] command. 
+To complete the task, I first had to familiarize myself at a minimum level with shell script then a had to figure out a way to better organize and implement the hooks. Tried to organize the scripts in a pre-commit.d folder but soon realized It would not be very easy for the teamto use It because of repetitive tasks to actvate each one of scripts. I then tried to install all at once using a pre-commit-hooks.yalm. That could work and It may be a possibility in the future, if added in the .git ignore. For now, I decided to put the pre-commit hooks all togheter, since there are not that much, and activate all at once with a single chmod +x [script name] command.
+
 ## Some data sources:
 - https://www.atlassian.com/git/tutorials/git-hooks
 - https://githooks.com/
